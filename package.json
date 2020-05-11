@@ -4,6 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "babel": "babel main.js",
+    "start": "webpack --config webpack.config.js && node app",
+    "build": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +20,39 @@
   },
   "homepage": "https://github.com/kanikash4/get-taxi#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "braces": "^2.3.2",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "handlebars": "^4.7.6",
+    "morgan": "^1.10.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "serve-favicon": "^2.5.0",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.16.0",
+    "clean-webpack-plugin": "^0.1.17",
+    "css-loader": "^0.28.7",
+    "file-loader": "^0.11.2",
+    "html-webpack-plugin": "^2.30.1",
+    "jshint": "^2.9.1",
+    "sass-loader": "^6.0.6",
+    "mocha": "^3.0.1",
+    "node-sass": "^4.5.3",
+    "should": "^10.0.0",
+    "style-loader": "^0.18.2",
+    "supertest": "^2.0.0",
+    "webpack": "^3.8.1",
+    "webpack-bundle-analyzer": "^2.9.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.20.0"
   }
 }
