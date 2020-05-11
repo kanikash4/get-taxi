@@ -4,3 +4,9 @@
 .DS_Store
 .vscode
 .env
+package-lock.json
+node_modules
+.tmp
+*.log
+logs
+build/
