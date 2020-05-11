@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/kanikash4/get-taxi/issues"
   },
-  "homepage": "https://github.com/kanikash4/get-taxi#readme"
+  "homepage": "https://github.com/kanikash4/get-taxi#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
