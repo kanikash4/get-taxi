@@ -15,7 +15,7 @@ async function getCabs(req, res, next) {
       cab.isBooked = true;
       res.json({
         message     : "Cab booked!",
-        cabID       : cab.id,
+        taxiNo       : cab.id,
         cabNumber   : cab.number,
         driverName  : cab.driverName,
         driverNumber: cab.driverNumber,
@@ -38,28 +38,33 @@ async function getCabs(req, res, next) {
 }
 
 async function completeRide(req, res, next) {
-	 if (req.query.id && !isNaN(req.query.id) && req.query.latitude && req.query.longitude && !isNaN(req.query.latitude) && !isNaN(req.query.longitude)) {
-    var cabID = parseInt(req.query.id);
+	 if (req.query.taxiNo && !isNaN(req.query.taxiNo) && req.query.latitude && req.query.longitude && !isNaN(req.query.latitude) && !isNaN(req.query.longitude)) {
+    var cabID = parseInt(req.query.taxiNo);
     var latitude = parseInt(req.query.latitude);
     var longitude = parseInt(req.query.longitude);
+    //dest location
     var location = {
       latitude: latitude,
       longitude: longitude
     };
     var userCab = null;
     cabs.forEach(function(cab) {
-      if (cabID === cab.id) {
+      if (cabID === Number(cab.id)) {
         userCab = cab;
       }
     });
+
     if (userCab) {
       if (userCab.isBooked) {
+
         userCab.isBooked = false;
         var distance = getDistance(userCab.location, location);
+        var price = await calculatePrice(distance, userCab.color);
         userCab.location = location;
         res.json({
           message   : "Ride completed!",
-          distance  : distance.toFixed(2),
+          distance  : distance,
+          price     : price,
           errMessage: ""
         })
       } else {
@@ -107,11 +112,26 @@ function getClosestCab (location, color) {
   return closestCab;
 }
 
-function getDistance(source, destination) {
+function getDistance(source, destination) { 
   var a = source.latitude - destination.latitude;
   var b = source.longitude - destination.longitude;
   var c = Math.sqrt(a * a + b * b);
-  return c;
+  return c.toFixed(2);
+}
+
+function calculatePrice(distance, cabColor) {
+  //The price is $1 per minute, and $2 per kilometer. Pink cars cost an additional $5
+  //Assume every distance is completed in 20 units e.g. (60/3) mins
+  var mins = Math.round(distance/20);
+  var amt =1;
+  var price = 0;
+  if(cabColor ==="PINK"){
+    amt=6;
+    price = mins * amt;
+  } else {
+    price = mins*amt
+  }
+  return Number(price);
 }
 
 module.exports ={
