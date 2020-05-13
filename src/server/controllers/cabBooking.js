@@ -2,7 +2,6 @@
 const cabs = require('../data/cab');
 
 async function getCabs(req, res, next) {
-  console.log("hi " + req.query.longitude)
 	if (req.query.lattitude && req.query.longitude && !isNaN(req.query.lattitude) && !isNaN(req.query.longitude)) {
     var lattitude = parseInt(req.query.lattitude);
     var longitude = parseInt(req.query.longitude);
@@ -15,15 +14,15 @@ async function getCabs(req, res, next) {
     if (cab) {
       cab.isBooked = true;
       res.json({
-        message: "Cab booked!",
-        cabID: cab.id,
-        driverName: cab.driverName,
+        message     : "Cab booked!",
+        cabID       : cab.id,
+        driverName  : cab.driverName,
         driverNumber: cab.driverNumber,
-        location: cab.location
+        location    : cab.location
       });
     } else {
        res.json({
-         message: "No cabs available!"
+         message: "No cabs available at the moment, Kindly try again after few minutes!"
        });
     }
   } else {
@@ -34,11 +33,48 @@ async function getCabs(req, res, next) {
 }
 
 async function completeRide(req, res, next) {
-	return {};
+	 if (req.query.id && !isNaN(req.query.id) && req.query.lattitude && req.query.longitude && !isNaN(req.query.lattitude) && !isNaN(req.query.longitude)) {
+    var cabID = parseInt(req.query.id);
+    var lattitude = parseInt(req.query.lattitude);
+    var longitude = parseInt(req.query.longitude);
+    var location = {
+      lattitude: lattitude,
+      longitude: longitude
+    };
+    var userCab = null;
+    cabs.forEach(function(cab) {
+      if (cabID === cab.id) {
+        userCab = cab;
+      }
+    });
+    if (userCab) {
+      if (userCab.isBooked) {
+        userCab.isBooked = false;
+        var distance = getDistance(userCab.location, location);
+        userCab.location = location;
+        res.json({
+          message : "Ride completed!",
+          distance: distance.toFixed(2)
+        })
+      } else {
+        res.json({
+          message: "Can nott complete a ride for the cab which is not booked!"
+        });
+      }
+    } else {
+      res.json({
+        message: "Could not find cab with id: " + cabID
+      });
+    }
+  } else {
+    res.json({
+      message: "Invalid/Missing parameters"
+    });
+  }
 }
 
 function getClosestCab (location, color) {
-  var closest = null;
+  var closestCab = null;
   var closestDistance = Infinity;
   cabs.forEach(function(cab) {
     if (!cab.isBooked) {
@@ -47,20 +83,19 @@ function getClosestCab (location, color) {
           var distance = getDistance(cab.location, location);
           if (distance < closestDistance) {
             closestDistance = distance;
-            closest = cab;
+            closestCab = cab;
           }
         }
       } else {
         var distance = getDistance(cab.location, location);
         if (distance < closestDistance) {
           closestDistance = distance;
-          closest = cab;
+          closestCab = cab;
         }
       }
-
     }
   });
-  return closest;
+  return closestCab;
 }
 
 function getDistance(source, destination) {
