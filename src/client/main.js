@@ -27,7 +27,6 @@ class GetCab extends React.Component {
 
     getCab() {
         this.setState({ requestPending: true }, () => {
-            console.log("here>>>>>>>" , this.state)
             getData('GET', getCabs, { latitudeValue: this.state.latitude, longitudeValue: this.state.longitude, colorValue: this.state.color }, (resp) => {
                 console.log("Success", resp)
                 this.setState({ data: [resp], requestPending: false });
@@ -39,11 +38,12 @@ class GetCab extends React.Component {
     }
 
     completeRide() {
+        console.log();
         this.setState({ requestPending: true }, () => {
             console.log(" completeRide here>>>>>>>" , this.state)
             getData('GET', getCabs, { latitudeValue: this.state.latitude, longitudeValue: this.state.longitude, id: this.state.id }, (resp) => {
                 console.log("Success", resp)
-                this.setState({ data: resp, requestPending: false });
+                this.setState({ data: [resp], requestPending: false });
             }, (error) => {
                 console.log("Failure", error);
                 this.setState({ data: [], requestPending: false });
@@ -75,24 +75,56 @@ class GetCab extends React.Component {
                     <input value={this.state.color} name="color" onChange={this.handleInputChange} />
                     <button onClick={this.getCab}>Get Taxi</button>
                 </div>
+
+                <div className="SubmitCompleteRideForm" disabled={this.state.disabled}>
+                    <label> Latitude</label>
+                    <input value={this.state.latitude} name="latitude" onChange={this.handleClick} />
+                    <label> Longitude</label>
+                    <input value={this.state.longitude} name="longitude" onChange={this.handleClick} />
+                    <label> id</label>
+                    <input value={this.state.taxiNumber} name="taxiNumber" onChange={this.handleClick} />
+                    <button onClick={this.completeRide}>Complete Ride</button>
+                </div>
+
                 {this.state.data && <div className="resultContainer">
                     <table>
                         <tbody>
-                            {this.state.data.length > 0 && this.state.data.map((datum, key) => {
-                                return (
-                                     <tr key={key}>
-                                        <td>Data Found: {datum.message}.</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
+                            {
+                                this.state.data.length > 0 && this.state.data.map((datum, key) => {
+                                    {
+                                        datum.message.length>0  
+                                        return (
+                                            <tr key={key}>
+                                                {datum.errMessage.length>0 && <td>Error: {datum.errMessage}</td>}
+                                                {
+                                                    datum.errMessage.length === 0 && 
+                                                    <td>
+                                                        {datum.message}  
+                                                        <br/>
+                                                        Driver Name: {datum.driverName}
+                                                        <br/>
+                                                        Driver Number: {datum.driverNumber}
+                                                        <br/>
+                                                        Taxi Number: {datum.cabID}
+                                                        <br/>
+                                                        Taxi Color: {datum.cabColor}
+                                                        <br/>
+                                                        Latitude: {datum.location.latitude}
+                                                        <br/>
+                                                        Longitude: {datum.location.longitude}
+                                                        <br/>
+                                                        <br/>
+                                                    <button onClick={this.completeRide}> Complete ride </button>
 
-                                );
-                            })}
-                            {this.state.data.length === 0 &&
-                                <tr>
-                                    <td>No Data Found for latitude: {this.state.latitude}, longitude: {this.state.latitude}
-                                      and taxi color: {this.state.color} <br/>Try searching again.</td>
-                                    <td>&nbsp;</td>
-                                </tr>}
+                                                    </td>
+                                                }
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        );
+                                    }
+                                })
+                            }
                         </tbody>
                     </table>
                 </div>}
