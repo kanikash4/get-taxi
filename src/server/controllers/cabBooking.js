@@ -16,18 +16,23 @@ async function getCabs(req, res, next) {
       res.json({
         message     : "Cab booked!",
         cabID       : cab.id,
+        cabNumber   : cab.number,
         driverName  : cab.driverName,
         driverNumber: cab.driverNumber,
-        location    : cab.location
+        cabColor    : cab.color,
+        location    : cab.location,
+        errMessage  : ""
       });
     } else {
        res.json({
-         message: "No cabs available at the moment, Kindly try again after few minutes!"
+        message: "",
+        errMessage: "No cabs available at the moment, Kindly try again after few minutes!"
        });
     }
   } else {
     res.json({
-      message: "Invalid/Missing parameters"
+        message: "",
+        errMessage: "Invalid/Missing parameters"
     });
   }
 }
@@ -53,22 +58,26 @@ async function completeRide(req, res, next) {
         var distance = getDistance(userCab.location, location);
         userCab.location = location;
         res.json({
-          message : "Ride completed!",
-          distance: distance.toFixed(2)
+          message   : "Ride completed!",
+          distance  : distance.toFixed(2),
+          errMessage: ""
         })
       } else {
         res.json({
-          message: "Can not complete a ride for the cab which is not booked!"
+          message: "",
+          errMessage: "Can not complete a ride for the cab which is not booked!"
         });
       }
     } else {
       res.json({
-        message: "Could not find cab with id: " + cabID
+        message: "",
+        errMessage: "Could not find cab with id: " + cabID
       });
     }
   } else {
     res.json({
-      message: "Invalid/Missing parameters"
+      message: "",
+      errMessage: "Invalid/Missing parameters"
     });
   }
 }
