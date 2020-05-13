@@ -40,6 +40,42 @@ html {
   }
 }
 
+.SubmitCompleteRideForm {
+  display:none;
+  justify-content: space-between;
+  width: 35%;
+  margin-left: 15%;
+  margin-top: 50px;
+  input {
+    flex-grow: 3;
+    margin-right: 5%;
+    height: 25px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+  }
+  button {
+    flex-grow: 1;
+    border: none;
+    background-color: #dddddd;
+    font-size: 15px;
+    display: inline-block;
+    border-radius: 15px;
+    white-space: nowrap;
+    border: 2px solid #555555;
+    padding: 5px 10px 5px 10px;
+  }
+  label {
+    padding: 5px 10px 5px 10px;
+  }
+}
+
+div[disabled]
+{
+  pointer-events: none;
+  opacity: 0.7;
+}
+
 .header {
   height: 30px;
   background-color: lightgrey;
@@ -66,9 +102,10 @@ html {
   }
   td,
   th {
-      border: 1px solid #dddddd;
+      border: node;
       text-align: left;
       padding: 8px;
+      display: inline-block;
   }
   tr:nth-child(even) {
       background-color: #dddddd;
