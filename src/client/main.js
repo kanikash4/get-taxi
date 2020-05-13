@@ -23,10 +23,7 @@ class GetCab extends React.Component {
     }
 
     handleInputChange(event) {
-        this.setState({ latitude: event.target.latitude, longitude: event.target.longitude, color: event.target.color  });
-        // this.setState({ latitude: event.target.latitude });
-        // this.setState({ longitude: event.target.longitude });
-        // this.setState({ color: event.target.color });
+        this.setState({ [event.target.name]: event.target.value });
     }
 
     getCab() {
@@ -58,11 +55,11 @@ class GetCab extends React.Component {
                 </div>
                 <div className="submitForm">
                     <label> Latitude</label>
-                    <input value={this.state.latitude} onChange={this.handleInputChange} />
+                    <input value={this.state.latitude} name="latitude" onChange={this.handleInputChange} />
                     <label> Longitude</label>
-                    <input value={this.state.longitude} onChange={this.handleInputChange} />
+                    <input value={this.state.longitude} name="longitude" onChange={this.handleInputChange} />
                     <label> Color</label>
-                    <input value={this.state.color} onChange={this.handleInputChange} />
+                    <input value={this.state.color} name="color" onChange={this.handleInputChange} />
                     <button onClick={this.getCab}>Get Taxi</button>
                 </div>
                 {this.state.data && <div className="resultContainer">
