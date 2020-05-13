@@ -1,8 +1,8 @@
 module.exports = [
   {
-    "id": "IND001",
+    "id": "111",
     "driverName": "Alice",
-    "driverNumber": "001",
+    "driverNumber": "0011223344",
     "location": {
       "latitude": 0,
       "longitude": 0
@@ -11,9 +11,9 @@ module.exports = [
     "color": "WHITE"
   },
   {
-    "id": "IND002",
+    "id": "222",
     "driverName": "Bob",
-    "driverNumber": "002",
+    "driverNumber": "0022334455",
     "location": {
       "latitude": 100,
       "longitude": 100
@@ -22,9 +22,9 @@ module.exports = [
     "color": "PINK"
   },
   {
-    "id": "IND003",
+    "id": "333",
     "driverName": "Adam",
-    "driverNumber": "003",
+    "driverNumber": "0033445566",
     "location": {
       "latitude": 100,
       "longitude": 200
@@ -33,9 +33,9 @@ module.exports = [
     "color": "PINK"
   },
   {
-    "id": "IND004",
+    "id": "444",
     "driverName": "Eve",
-    "driverNumber": "004",
+    "driverNumber": "0044556677",
     "location": {
       "latitude": 200,
       "longitude": 100
