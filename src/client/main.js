@@ -39,6 +39,19 @@ class GetCab extends React.Component {
         });
     }
 
+    completeRide() {
+        this.setState({ requestPending: true }, () => {
+            console.log(" completeRide here>>>>>>>" , this.state)
+            getData('GET', getCabs, { latitudeValue: this.state.latitude, longitudeValue: this.state.longitude, id: this.state.id }, (resp) => {
+                console.log("Success", resp)
+                this.setState({ data: resp, requestPending: false });
+            }, (error) => {
+                console.log("Failure", error);
+                this.setState({ data: [], requestPending: false });
+            });
+        });
+    }
+
     render() {
         return (
             <div>
@@ -77,7 +90,7 @@ class GetCab extends React.Component {
                             {this.state.data.length === 0 &&
                                 <tr>
                                     <td>No Data Found for latitude: {this.state.latitude}, longitude: {this.state.latitude}
-                                     and taxi color: {this.state.color} <br/>Try searching again.</td>
+                                      and taxi color: {this.state.color} <br/>Try searching again.</td>
                                     <td>&nbsp;</td>
                                 </tr>}
                         </tbody>
