@@ -1,7 +1,6 @@
 module.exports = [
   {
-    "id": 1,
-    "number":"IND001",
+    "id": "IND001",
     "driverName": "Alice",
     "driverNumber": "001",
     "location": {
@@ -12,8 +11,7 @@ module.exports = [
     "color": "WHITE"
   },
   {
-    "id": 2,
-    "number":"IND002",
+    "id": "IND002",
     "driverName": "Bob",
     "driverNumber": "002",
     "location": {
@@ -24,8 +22,7 @@ module.exports = [
     "color": "PINK"
   },
   {
-    "id": 3,
-    "number":"IND003",
+    "id": "IND003",
     "driverName": "Adam",
     "driverNumber": "003",
     "location": {
@@ -36,8 +33,7 @@ module.exports = [
     "color": "PINK"
   },
   {
-    "id": 4,
-    "number":"IND004",
+    "id": "IND004",
     "driverName": "Eve",
     "driverNumber": "004",
     "location": {
