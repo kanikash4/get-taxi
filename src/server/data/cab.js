@@ -4,7 +4,7 @@ module.exports = [
     "driverName": "driver 1",
     "driverNumber": "001",
     "location": {
-      "lattitude": 0,
+      "latitude": 0,
       "longitude": 0
     },
     "isBooked": false,
@@ -15,7 +15,7 @@ module.exports = [
     "driverName": "driver 2",
     "driverNumber": "002",
     "location": {
-      "lattitude": 100,
+      "latitude": 100,
       "longitude": 100
     },
     "isBooked": false,
@@ -26,7 +26,7 @@ module.exports = [
     "driverName": "driver 3",
     "driverNumber": "003",
     "location": {
-      "lattitude": 100,
+      "latitude": 100,
       "longitude": 200
     },
     "isBooked": false,
@@ -37,7 +37,7 @@ module.exports = [
     "driverName": "driver 4",
     "driverNumber": "004",
     "location": {
-      "lattitude": 200,
+      "latitude": 200,
       "longitude": 100
     },
     "isBooked": false,
