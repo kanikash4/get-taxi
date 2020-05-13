@@ -1,7 +1,10 @@
 import 'whatwg-fetch';
 
 export function getData(method, url, urlParams, successCB, failureCB) {
-    fetch(url + flattenURLParams(urlParams), {
+    console.log(urlParams)
+    fetch(url + "?latitude="+urlParams.latitudeValue + "&longitude="+urlParams.longitudeValue + "&color="+ urlParams.colorValue   , {
+
+    // fetch(url + flattenURLParams(urlParams), {
         method  : method,
         headers : {'Content-Type': 'application/json'}
     }).then(checkStatus).then(parseJSON).then((data) => {
