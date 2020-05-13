@@ -3,9 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './main.scss';
-// import { postData } from './fetch';
 import { getData } from './fetch';
-
 import { getCab as getCabs } from './urls';
 
 class GetCab extends React.Component {
@@ -18,6 +16,7 @@ class GetCab extends React.Component {
             latitude:'',
             longitude:'',
             color:'',
+            id:'',
             requestPending: false
         };
     }
@@ -31,7 +30,7 @@ class GetCab extends React.Component {
             console.log("here>>>>>>>" , this.state)
             getData('GET', getCabs, { latitudeValue: this.state.latitude, longitudeValue: this.state.longitude, colorValue: this.state.color }, (resp) => {
                 console.log("Success", resp)
-                this.setState({ data: resp, requestPending: false });
+                this.setState({ data: [resp], requestPending: false });
             }, (error) => {
                 console.log("Failure", error);
                 this.setState({ data: [], requestPending: false });
@@ -65,6 +64,7 @@ class GetCab extends React.Component {
                     </div>}
                 <div className="header">
                     <a href="https://github.com/kanikash4/get-taxi">Source Code </a>
+
                 </div>
                 <div className="submitForm">
                     <label> Latitude</label>
@@ -80,8 +80,8 @@ class GetCab extends React.Component {
                         <tbody>
                             {this.state.data.length > 0 && this.state.data.map((datum, key) => {
                                 return (
-                                     <tr>
-                                        <td>Data Found: {this.state.number}.</td>
+                                     <tr key={key}>
+                                        <td>Data Found: {datum.message}.</td>
                                         <td>&nbsp;</td>
                                     </tr>
 
