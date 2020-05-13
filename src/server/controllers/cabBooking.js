@@ -2,11 +2,11 @@
 const cabs = require('../data/cab');
 
 async function getCabs(req, res, next) {
-	if (req.query.lattitude && req.query.longitude && !isNaN(req.query.lattitude) && !isNaN(req.query.longitude)) {
-    var lattitude = parseInt(req.query.lattitude);
+	if (req.query.latitude && req.query.longitude && !isNaN(req.query.latitude) && !isNaN(req.query.longitude)) {
+    var latitude = parseInt(req.query.latitude);
     var longitude = parseInt(req.query.longitude);
     var userLocation = {
-      lattitude: lattitude,
+      latitude: latitude,
       longitude: longitude
     };
     var color = req.query.color || null;
@@ -33,12 +33,12 @@ async function getCabs(req, res, next) {
 }
 
 async function completeRide(req, res, next) {
-	 if (req.query.id && !isNaN(req.query.id) && req.query.lattitude && req.query.longitude && !isNaN(req.query.lattitude) && !isNaN(req.query.longitude)) {
+	 if (req.query.id && !isNaN(req.query.id) && req.query.latitude && req.query.longitude && !isNaN(req.query.latitude) && !isNaN(req.query.longitude)) {
     var cabID = parseInt(req.query.id);
-    var lattitude = parseInt(req.query.lattitude);
+    var latitude = parseInt(req.query.latitude);
     var longitude = parseInt(req.query.longitude);
     var location = {
-      lattitude: lattitude,
+      latitude: latitude,
       longitude: longitude
     };
     var userCab = null;
@@ -58,7 +58,7 @@ async function completeRide(req, res, next) {
         })
       } else {
         res.json({
-          message: "Can nott complete a ride for the cab which is not booked!"
+          message: "Can not complete a ride for the cab which is not booked!"
         });
       }
     } else {
@@ -99,7 +99,7 @@ function getClosestCab (location, color) {
 }
 
 function getDistance(source, destination) {
-  var a = source.lattitude - destination.lattitude;
+  var a = source.latitude - destination.latitude;
   var b = source.longitude - destination.longitude;
   var c = Math.sqrt(a * a + b * b);
   return c;
