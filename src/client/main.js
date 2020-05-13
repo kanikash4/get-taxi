@@ -4,19 +4,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './main.scss';
 import { getData } from './fetch';
+import { getrideCompleted } from './fetch';
 import { getCab as getCabs } from './urls';
+import { completeRide as completeRides } from './urls';
 
 class GetCab extends React.Component {
     constructor() {
         super();
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.completeRide = this.completeRide.bind(this);
         this.getCab = this.getCab.bind(this);
         this.state = {
             data: '',
             latitude:'',
             longitude:'',
             color:'',
-            id:'',
+            taxiNo:'',
             requestPending: false
         };
     }
@@ -38,11 +41,14 @@ class GetCab extends React.Component {
     }
 
     completeRide() {
-        console.log();
         this.setState({ requestPending: true }, () => {
-            console.log(" completeRide here>>>>>>>" , this.state)
-            getData('GET', getCabs, { latitudeValue: this.state.latitude, longitudeValue: this.state.longitude, id: this.state.id }, (resp) => {
+            getrideCompleted('GET', completeRides, { latitudeValue: this.state.latitude, longitudeValue: this.state.longitude, taxiNo: this.state.data[0].taxiNo }, (resp) => {
                 console.log("Success", resp)
+                resp.location       = this.state.data[0].location;
+                resp.taxiNo         = this.state.data[0].taxiNo;
+                resp.driverName     = this.state.data[0].driverName;
+                resp.driverNumber   = this.state.data[0].driverNumber;
+                resp.cabColor       = this.state.data[0].cabColor;
                 this.setState({ data: [resp], requestPending: false });
             }, (error) => {
                 console.log("Failure", error);
@@ -82,7 +88,7 @@ class GetCab extends React.Component {
                     <label> Longitude</label>
                     <input value={this.state.longitude} name="longitude" onChange={this.handleClick} />
                     <label> id</label>
-                    <input value={this.state.taxiNumber} name="taxiNumber" onChange={this.handleClick} />
+                    <input value={this.state.taxiNo} name="taxiNo" onChange={this.handleClick} />
                     <button onClick={this.completeRide}>Complete Ride</button>
                 </div>
 
@@ -101,21 +107,20 @@ class GetCab extends React.Component {
                                                     <td>
                                                         {datum.message}  
                                                         <br/>
-                                                        Driver Name: {datum.driverName}
-                                                        <br/>
-                                                        Driver Number: {datum.driverNumber}
-                                                        <br/>
-                                                        Taxi Number: {datum.cabID}
-                                                        <br/>
-                                                        Taxi Color: {datum.cabColor}
-                                                        <br/>
-                                                        Latitude: {datum.location.latitude}
-                                                        <br/>
-                                                        Longitude: {datum.location.longitude}
-                                                        <br/>
-                                                        <br/>
-                                                    <button onClick={this.completeRide}> Complete ride </button>
+                                                        {datum.driverName?  <td>Driver Name: {datum.driverName}</td> : null}
 
+                                                         {datum.driverNameNumber? <td>Driver Number: {datum.driverNumber} </td>: null}
+                                                       
+                                                        {datum.taxiNo?  <td>Taxi Number: {datum.taxiNo}</td>: null}
+                                                        {datum.location.latitude? <td>Source Latitude: {datum.location.latitude}</td>: null}
+                                                        {datum.location.longitude? <td>Source Longitude: {datum.location.longitude}</td> : null}
+                                                        {datum.cabColor? <td>Taxi Color: {datum.cabColor}</td>: mull}
+                                                        {datum.distance? <td>Distance: {datum.distance}</td>: null}
+                                                        {datum.price? <td>Price: {datum.price}</td>: null}
+
+
+                                                        <br/>
+                                                    <button id="btnCompleteRide" onClick={this.completeRide}> Complete ride </button>
                                                     </td>
                                                 }
                                                 <td>
