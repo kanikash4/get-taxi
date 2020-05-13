@@ -1,7 +1,8 @@
 module.exports = [
   {
     "id": 1,
-    "driverName": "driver 1",
+    "number":"IND001",
+    "driverName": "Alice",
     "driverNumber": "001",
     "location": {
       "latitude": 0,
@@ -12,7 +13,8 @@ module.exports = [
   },
   {
     "id": 2,
-    "driverName": "driver 2",
+    "number":"IND002",
+    "driverName": "Bob",
     "driverNumber": "002",
     "location": {
       "latitude": 100,
@@ -23,7 +25,8 @@ module.exports = [
   },
   {
     "id": 3,
-    "driverName": "driver 3",
+    "number":"IND003",
+    "driverName": "Adam",
     "driverNumber": "003",
     "location": {
       "latitude": 100,
@@ -34,7 +37,8 @@ module.exports = [
   },
   {
     "id": 4,
-    "driverName": "driver 4",
+    "number":"IND004",
+    "driverName": "Eve",
     "driverNumber": "004",
     "location": {
       "latitude": 200,
